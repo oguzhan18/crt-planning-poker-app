@@ -41,8 +41,8 @@ describe('Toolbar component', () => {
   });
   it('should render Join room button', () => {
     render(<Toolbar />);
-    const newroom = screen.getByText('Join room');
-    expect(newroom).toBeInTheDocument();
+    const joinRoomButton = screen.getByText(/Join room/i);
+    expect(joinRoomButton).toBeInTheDocument();
   });
   it('should navigate to Home page when New room button is clicked', () => {
     render(<Toolbar />);

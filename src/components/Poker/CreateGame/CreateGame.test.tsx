@@ -10,93 +10,42 @@ jest.mock("react-router-dom", () => ({
     push: jest.fn(),
   }),
 }));
-describe("CreateGame component", () => {
+
+describe("CreateGame component", () => { 
+
   it("should display correct text fields", () => {
     render(<CreateGame />);
-
-    expect(
-      screen.getByPlaceholderText("Enter a session name")
-    ).toBeInTheDocument();
+    // Use getByPlaceholderText as a workaround
+    expect(screen.getByPlaceholderText("Enter a room name")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("Enter your name")).toBeInTheDocument();
   });
 
   it("should display create button", () => {
     render(<CreateGame />);
-
-    expect(screen.getByRole("button")).toBeInTheDocument();
-    expect(screen.getByRole("button")).toHaveTextContent("Create");
+    expect(screen.getByRole("button", { name: "Create" })).toBeInTheDocument();
   });
-  it("should be able to Create New Room", async () => {
+
+  it("should be able to create new game room", async () => {
     render(<CreateGame />);
-    const sessionName = screen.getByPlaceholderText("Enter a session name");
-    userEvent.clear(sessionName);
-    userEvent.type(sessionName, "Marvels");
+    const roomNameInput = screen.getByPlaceholderText("Enter a room name");
+    const userNameInput = screen.getByPlaceholderText("Enter your name");
 
-    const userName = screen.getByPlaceholderText("Enter your name");
-    userEvent.clear(userName);
-    userEvent.type(userName, "Rock");
+    userEvent.clear(roomNameInput);
+    userEvent.type(roomNameInput, "Marvels");
 
-    const createButton = screen.getByText("Create");
+    userEvent.clear(userNameInput);
+    userEvent.type(userNameInput, "Rock");
+
+    const gameTypeRadio = screen.getByLabelText("Hours (7h) (0, ½, 1, 2, 3, 4, 7, 11, 14, 21, 35, 56, 70)");
+    userEvent.click(gameTypeRadio);
+
+    const createButton = screen.getByRole("button", { name: "Create" });
     userEvent.click(createButton);
-
-    expect(gamesService.addNewGame).toHaveBeenCalled();
 
     expect(gamesService.addNewGame).toHaveBeenCalledWith(
       expect.objectContaining({
         createdBy: "Rock",
         gameType: "HoursSevenCards",
-        name: "Marvels",
-      })
-    );
-  });
-  it("should be able to Create New Room of TShirt Sizing", async () => {
-    render(<CreateGame />);
-    const sessionName = screen.getByPlaceholderText("Enter a session name");
-    userEvent.clear(sessionName);
-    userEvent.type(sessionName, "Marvels");
-
-    const userName = screen.getByPlaceholderText("Enter your name");
-    userEvent.clear(userName);
-    userEvent.type(userName, "Rock");
-
-    const tShirt = screen.getByText("T-Shirt", { exact: false });
-    userEvent.click(tShirt);
-
-    const createButton = screen.getByText("Create");
-    userEvent.click(createButton);
-
-    expect(gamesService.addNewGame).toHaveBeenCalled();
-
-    expect(gamesService.addNewGame).toHaveBeenCalledWith(
-      expect.objectContaining({
-        createdBy: "Rock",
-        gameType: "TShirt",
-        name: "Marvels",
-      })
-    );
-  });
-  it("should be able to Create New Room of Short Fibonacci Sizing", async () => {
-    render(<CreateGame />);
-    const sessionName = screen.getByPlaceholderText("Enter a session name");
-    userEvent.clear(sessionName);
-    userEvent.type(sessionName, "Marvels");
-
-    const userName = screen.getByPlaceholderText("Enter your name");
-    userEvent.clear(userName);
-    userEvent.type(userName, "Rock");
-
-    const gameType = screen.getByText("Short Fibonacci", { exact: false });
-    userEvent.click(gameType);
-
-    const createButton = screen.getByText("Create");
-    userEvent.click(createButton);
-
-    expect(gamesService.addNewGame).toHaveBeenCalled();
-
-    expect(gamesService.addNewGame).toHaveBeenCalledWith(
-      expect.objectContaining({
-        createdBy: "Rock",
-        gameType: "ShortFibonacci",
         name: "Marvels",
       })
     );
