@@ -74,6 +74,6 @@ describe('Toolbar component', () => {
     act(() => {
       userEvent.click(title);
     });
-    expect(window.location.href).toEqual('https://github.com/hellomuthu23/crt-agile-poker');
+    expect(window.location.href).toEqual('https://github.com/oguzhan18/crt-planning-poker-app');
   });
 });

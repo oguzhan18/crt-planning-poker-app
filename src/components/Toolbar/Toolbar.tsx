@@ -56,7 +56,7 @@ export const Toolbar = () => {
                 color="inherit"
                 onClick={() =>
                   (window.location.href =
-                    "https://github.com/oguzhan18/crt-agile-poker")
+                    "https://github.com/oguzhan18/crt-planning-poker-app")
                 }
               >
                 <GithubIcon></GithubIcon>
