@@ -52,6 +52,7 @@ export const Toolbar = () => {
                 {!isSmallScreen ? "Join Room" : null}
               </Button>
               <Button
+                target="_blank"
                 id="github-button"
                 color="inherit"
                 onClick={() =>
